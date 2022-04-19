@@ -201,8 +201,10 @@ SELECT `school_db_instructor`.`id`,
 # Get the count of students, courses, and instructors and print them in the terminal
 def problem_four(request):
 
-
-
+    print(f'Student Count: {Student.objects.count()}')
+    print(f'Course Count: {Course.objects.count()}')
+    print(f'Instructor Count: {Instructor.objects.count()}')
+    
     return complete(request)
 
 
@@ -247,7 +249,15 @@ SELECT COUNT(*) AS `__count`
 # NOTE every time you execute this function a duplicate student will be created with a different primary key number
 def problem_five(request):
 
+    new_student = Student(id=11, first_name='Kyle', last_name='Hardwood', year='12', gpa=3)
+    new_student.save()
 
+    student = Student.objects.get(id=11)
+
+    print(f'Id: {student.id}')
+    print(f'Full Name: {student.first_name} {student.last_name}')
+    print(f'Year: {student.year}')
+    print(f'GPA: {student.gpa}')
 
     return complete(request)
 
@@ -283,8 +293,14 @@ def problem_six(request):
     
     # Make sure to set this equal to the primary key of the row you just created!
     student_id = 11
+    student = Student.objects.get(id=student_id)
+    student.gpa = 3.5
+    student.save()
 
-
+    print(f'Id: {student.id}')
+    print(f'Full Name: {student.first_name} {student.last_name}')
+    print(f'Year: {student.year}')
+    print(f'GPA: {student.gpa}')
 
     return complete(request)
 
@@ -332,7 +348,7 @@ def problem_seven(request):
 
     # Make sure to set this equal to the primary key of the row you just created!
     student_id = 11
-
+    Student.objects.get(id=student_id).delete()
 
     try:
         student = Student.objects.get(pk=student_id)
@@ -390,6 +406,16 @@ SELECT `school_db_student`.`id`,
 # Print out the instructors full name and number of courses to the console
 def bonus_problem(request):
 
+    courses = Course.objects.all()
+    instructor = Instructor.objects.all()
+
+    number_of_instructors = instructor.count()
+    
+    print(number_of_instructors)
+
+    # print (f'Instructor Name: {instructor.first_name} {instructor.last_name}')
+    
+    
 
 
     return complete(request)
