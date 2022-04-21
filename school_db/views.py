@@ -406,16 +406,12 @@ SELECT `school_db_student`.`id`,
 # Print out the instructors full name and number of courses to the console
 def bonus_problem(request):
 
-    courses = Course.objects.all()
-    instructor = Instructor.objects.all()
-
-    number_of_instructors = instructor.count()
-    
-    print(number_of_instructors)
-
     # print (f'Instructor Name: {instructor.first_name} {instructor.last_name}')
+
+    instructors = Instructor.objects.annotate(course__count=Count('course')).filter(course__count=1)
     
-    
+    for instructor in instructors:
+         print (f'Instructor Name: {instructor.first_name} {instructor.last_name}')
 
 
     return complete(request)
